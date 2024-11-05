@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "customFont";
+  src: url("./assets/fonts/SFPRODISPLAYBLACKITALIC.OTF") format("opentype"),
+    url("./assets/fonts/SFPRODISPLAYBOLD.OTF") format("opentype"),
+    url("./assets/fonts/SFPRODISPLAYHEAVYITALIC.OTF") format("opentype"),
+    url("./assets/fonts/SFPRODISPLAYLIGHTITALIC.OTF") format("opentype"),
+    url("./assets/fonts/SFPRODISPLAYMEDIUM.OTF") format("opentype"),
+    url("./assets/fonts/SFPRODISPLAYREGULAR.OTF") format("opentype"),
+    url("./assets/fonts/SFPRODISPLAYTHINITALIC.OTF") format("opentype"),
+    url("./assets/fonts/SFPRODISPLAYULTRALIGHTITALIC.OTF") format("opentype"),
+    url("./assets/fonts/SFPRODISPLAYSEMIBOLDITALIC.OTF") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+root {
+  font-family: "customFont", sans-serif;
+}
