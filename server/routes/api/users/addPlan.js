@@ -5,9 +5,12 @@ const addPlan = async (req, res) => {
     const { name, total, plan } = req.body;
 
     const user = await User.findById(req.user.id);
+
+    console.log("add plan!!!")
     // console.log(req.body);
     // console.log(req.user);
 
+    
     if (user.subscription) {
       const subscription = await Subscription.findById(user.subscription);
       subscription.name = name;

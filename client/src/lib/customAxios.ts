@@ -8,7 +8,7 @@ const backend_url: string = import.meta.env.VITE_BACKEND_URL;
 
 console.log("backend_url==>", backend_url);
 const axiosInstance = axios.create({
-  baseURL: 'http://localhost:8888',
+  baseURL: backend_url,
 });
 
 // Interceptor for requests

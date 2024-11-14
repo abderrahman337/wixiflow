@@ -105,7 +105,7 @@ const PopUpPaymentForm = ({
           <form
             className="w-[720px] p-6  bg-white shadow-md rounded-md"
             id="payment-form"
-            onSubmit={handleSubmit}
+            // onSubmit={handleSubmit}
           >
             <fieldset className="FormGroup space-y-4">
               <div className="FormRow">
@@ -117,7 +117,7 @@ const PopUpPaymentForm = ({
             </fieldset>
             <button
               className="mt-4 px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600"
-              type="submit"
+              type="button"  onClick={handleSubmit}
             >
               Pay
             </button>

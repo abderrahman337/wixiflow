@@ -23,9 +23,6 @@ router.get("/test", async (req, res) => {
   return res.status(200).json({ msg: "Router is working" });
 });
 
-
-
-
 /**
  *@router      Metohd : POST   endpoint : api/auth/refresh-token
  *@access      Public
