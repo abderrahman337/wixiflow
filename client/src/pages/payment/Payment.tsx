@@ -4,6 +4,8 @@ import PopUpPaymentForm from "./PopUpPaymentForm";
 import { useEffect, useState } from "react";
 import stripePromise from "../../lib/getStripe";
 import Loading from "../../components/common/Loading";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
 
 const Payment = ({
   setShowPayment,
@@ -13,24 +15,26 @@ const Payment = ({
   const [stripe, setStripe] = useState<Stripe | null>(null);
   const [loading, setLoading] = useState(false);
 
+  // Retrieve the selected price from state
+  const { price } = useSelector((state: RootState) => state.payment);
+
   useEffect(() => {
     const getstripe = async () => {
       setLoading(true);
       const _stripe = await stripePromise();
-      console.log("stripe==>", _stripe);
       setStripe(_stripe);
       setLoading(false);
     };
     getstripe();
   }, []);
+
   return (
     <div>
       {loading ? (
         <Loading />
       ) : (
         <Elements stripe={stripe}>
-          {/* <PaymentForm amount={price || 0} /> */}
-          <PopUpPaymentForm setShowPayment={setShowPayment} />
+          <PopUpPaymentForm setShowPayment={setShowPayment} price={price ?? 0} />
         </Elements>
       )}
     </div>

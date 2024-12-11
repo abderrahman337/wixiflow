@@ -1,24 +1,25 @@
+import React, { useState } from "react";
 import { Check, Search, X } from "lucide-react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store/store";
-import notion from "../../assets/icons/notion.png";
-import x from "../../assets/icons/twitter.png";
-import instagram from "../../assets/icons/instagram.png";
-import linkedin from "../../assets/icons/linkedin.png";
-import gmail from "../../assets/icons/gmail.png";
-import googleDrive from "../../assets/icons/googledrive.png";
-import calendly from "../../assets/icons/calendly.png";
-import tiktok from "../../assets/icons/tiktok.png";
-import googleDocs from "../../assets/icons/googledocs.png";
-import googleSheets from "../../assets/icons/googlesheet.png";
-import microsoftTeams from "../../assets/icons/mircosoftteams.png";
-import microsoftWord from "../../assets/icons/word.png";
-import outlook from "../../assets/icons/outlook.png";
-import slack from "../../assets/icons/slack.png";
-import calCom from "../../assets/icons/cal.png";
-import googleMeet from "../../assets/icons/googlemeet.png";
-import stripe from "../../assets/icons/stripe.png";
-import whatsapp from "../../assets/icons/whatsapp.png";
+import notion from "../../assets/icons/home/notion.png";
+import x from "../../assets/icons/home/twitter.png";
+import instagram from "../../assets/icons/apps/instagram.png";
+import linkedin from "../../assets/icons/apps/linkedin.png";
+import gmail from "../../assets/icons/home/gmail.png";
+import googleDrive from "../../assets/icons/apps/googledrive.png";
+import calendly from "../../assets/icons/home/calendly.png";
+import tiktok from "../../assets/icons/apps/tiktok.png";
+import googleDocs from "../../assets/icons/home/googledocs.png";
+import googleSheets from "../../assets/icons/apps/googlesheet.png";
+import microsoftTeams from "../../assets/icons/apps/mircosoftteams.png";
+import microsoftWord from "../../assets/icons/apps/word.png";
+import outlook from "../../assets/icons/apps/outlook.png";
+import slack from "../../assets/icons/apps/slack.png";
+import calCom from "../../assets/icons/apps/cal.png";
+import googleMeet from "../../assets/icons/apps/googlemeet.png";
+import stripe from "../../assets/icons/apps/stripe.png";
+import whatsapp from "../../assets/icons/apps/whatsapp.png";
 
 const apps = [
   { name: "Notion", icon: notion },
@@ -43,6 +44,13 @@ const apps = [
 
 const Productivity = () => {
   const { name } = useSelector((state: RootState) => state.workspace);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filter apps based on search term
+  const filteredApps = apps.filter((app) =>
+    app.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="min-h-screen bg-white p-6 sm:p-8">
       <div className="max-w-6xl mx-auto">
@@ -54,15 +62,17 @@ const Productivity = () => {
             <Search className="w-4 h-4 sm:w-6 sm:h-6 absolute top-[1rem] sm:top-[1.3rem] left-4 -translate-y-1/2 text-[#A5A5A5]" />
             <input
               type="search"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search apps..."
-              className=" lg:w-[16rem] md:w-[20rem] w-full bg-[#F2F2F2] rounded-full py-1 sm:py-2 pl-12 inline-block ml-auto"
+              className="lg:w-[16rem] md:w-[20rem] w-full bg-[#F2F2F2] rounded-full py-1 sm:py-2 pl-12 inline-block ml-auto"
             />
           </div>
         </div>
         <hr className="sm:hidden bg-[#707070] opacity-30 w-full border-[0.75px] my-6 sm:my-8" />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-y-4 sm:gap-y-8 gap-x-8 mb-8 sm:my-8">
-          {apps.map((app, index) => (
+          {filteredApps.map((app, index) => (
             <div
               key={index}
               className="flex items-center justify-between bg-[#F4F4F4] px-2 py-2 sm:py-3 rounded-full"
@@ -83,7 +93,7 @@ const Productivity = () => {
             </div>
           ))}
         </div>
-        <hr className=" hidden sm:block bg-slate-700 opacity-30 w-full border my-6 sm:my-8" />
+        <hr className="hidden sm:block bg-slate-700 opacity-30 w-full border my-6 sm:my-8" />
         <div className="flex justify-center">
           <button className="bg-blue-500 hover:bg-blue-600 text-white w-full sm:w-[20rem] py-3 rounded-full">
             <Check className="w-6 h-6 mx-auto" />
@@ -105,4 +115,5 @@ const Productivity = () => {
     </div>
   );
 };
+
 export default Productivity;

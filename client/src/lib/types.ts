@@ -11,6 +11,19 @@ export interface SigninProps {
   closeModal: () => void;
 }
 
+export interface User {
+  _id: string;
+  email: string;
+  subscription?: {
+    remain?: number;
+    total?: number;
+    plan?: string;
+    expiresAt?: string;
+  };
+  createdAt: string;
+}
+
+
 export interface PaymentOptions {
   amount: number;
   currency: string;

@@ -49,38 +49,47 @@ export const addPlan =
     }
   };
 
-export const deleteUser =
+  export const deleteUser =
   (id: string) =>
   async (dispatch: AppDispatch): Promise<void> => {
     try {
-      const response = await myAxios.patch(`/api/users/delete`, id);
+      const response = await myAxios.patch(`/api/users/delete`, { id }); // Correctly pass the id
 
       if (response.status === 200) {
         toast.info("User Deleted!", {
           className: "text-sm sm:text-lg",
           position: "top-right",
         });
-        dispatch(response.data);
+        dispatch(getAllUsers()); 
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error deleting user:", error);
+      toast.error("Failed to delete user!", {
+        className: "text-sm sm:text-lg",
+        position: "top-right",
+      });
     }
   };
+
 
 export const undoDeleteUser =
   (id: string) =>
   async (dispatch: AppDispatch): Promise<void> => {
     try {
-      const response = await myAxios.patch("/api/users/undo-delete", id);
+      const response = await myAxios.patch("/api/users/undo-delete", { id }); // Correctly pass the id as an object
 
       if (response.status === 200) {
         toast.info("User Undo Deleted!", {
           className: "text-sm sm:text-lg",
           position: "top-right",
         });
-        dispatch(response.data);
+        dispatch(getAllUsers()); // Refresh the user list after undo
       }
     } catch (error) {
-      console.log(error);
+      console.error("Error undoing user deletion:", error);
+      toast.error("Failed to undo delete user!", {
+        className: "text-sm sm:text-lg",
+        position: "top-right",
+      });
     }
   };

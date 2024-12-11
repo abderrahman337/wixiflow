@@ -5,7 +5,7 @@ dotenv.config();
 // const MONGO_URI = process.env.DATABASE_URL;
 // const MONGO_URI =
 //   "mongodb+srv://harison:IGorc4L08ezqtbdZ@cluster0.yrbg4.mongodb.net/Aii";
-const MONGO_URI = "mongodb://localhost:27017/aii";
+const MONGO_URI = "mongodb+srv://lbaibiabderrahman95:Lbaibi081995@cluster0.jklml.mongodb.net/";
 if (!MONGO_URI) {
   throw new Error("MongoDB URI is not set in environment variables");
 }

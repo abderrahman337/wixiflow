@@ -25,7 +25,7 @@ router.post("/addplan", validateAuthorization, addPlan);
  * @payload     id
  * @return      user
  */
-router.patch("/delete", validateAuthorization, deleteUser);
+router.delete("/delete/:id", validateAuthorization, deleteUser);
 /**
  * @router      Metohd : PATCH   endpoint : api/users
  * @access      Private

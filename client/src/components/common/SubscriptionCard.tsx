@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useMediaQuery } from 'react-responsive';
+import BackArrowIcon from "../../assets/icons/backarrow.webp"; 
+import { useNavigate } from "react-router-dom"; 
+
+import StarIcon from "../../assets/icons/icon_tstar.png";
+import AIcon from "../../assets/icons/icon_a.png";
+import CheckWhiteIcon from "../../assets/icons/icon_check_white.png";
+// import CheckBlackIcon from "../../assets/icons/icon_check_black.png";
+import ListIcon from "../../assets/icons/icon_list.png";
 
 // Feature type
 interface Feature {
@@ -14,11 +22,7 @@ interface Task {
   count: string;
 }
 
-import StarIcon from "../../assets/icons/icon_tstar.png";
-import AIcon from "../../assets/icons/icon_a.png";
-import CheckWhiteIcon from "../../assets/icons/icon_check_white.png";
-import CheckBlackIcon from "../../assets/icons/icon_check_black.png";
-import ListIcon from "../../assets/icons/icon_list.png";
+
 
 interface SubscriptionCardProps{
     type: string,
@@ -40,6 +44,8 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({type, handleSubscrib
   const [selectedAppsCount, setAppsCount] = useState('');
   const [selectedWorkspacePrice, setWorkspacePrice] = useState(0);
   const [selectedWorkspaceCount, setWorkspaceCount] = useState('');
+  const navigate = useNavigate(); 
+
 
   const isMobile = useMediaQuery({ query: '(max-width: 768px)' });
 
@@ -121,17 +127,35 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({type, handleSubscrib
   }
 
   useEffect(()=>{
-
   },[]);
+  const handleBackClick = () => {
+    navigate("/admin"); 
+  };
 
   return (
     
+    
     <div className="min-w-screen flex flex-col h-screen w-full justify-center items-center">
       {isMobile ? (
-        // Mobile layout: left on top, right on bottom
         <>
           {/* top */}
+          
+          
           <div className="flex-col space-y-4 justify-center items-center bg-black text-white h-5/12 pt-8 rounded-lg m-1.5 pb-4 w-full">
+          <div className="flex justify-start w-full px-4 py-2">
+            <button
+              className="flex items-center text-gray-700 hover:text-white-900"
+              onClick={handleBackClick}
+            >
+              <img
+                src={BackArrowIcon}
+                alt="Back Arrow"
+                className="w-6 h-6 mr-2"
+              />
+              <span>Go to Admin Panel</span>
+            </button>
+          </div>
+          
               <span className="flex text-2xl text-gray-400 font-semibold font-bold font-sf-pro ml-8">Subscribe to {type}</span>
               <div className="flex items-center mt-3 ml-8">
                 <span className="w-6/12 justify-center text-left text-8xl text-white font-semibold mt-2 font-sf-pro">${monthly}</span>
@@ -221,10 +245,28 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({type, handleSubscrib
         // Desktop layout: left and right side by side
           <>
           {/* Main Content Area */}
+         
+          
           <div className="flex w-full  h-full">
+          
+          
             {/* Left Part */}
             <div className="flex-1 flex justify-end items-center h-screen bg-black text-white h-full ">
+            
               <div className="w-1/2">
+              <div className="flex justify-start w-full px-8 py-6" >
+                <button
+                  className="flex items-center text-white-700 hover:text-gray text-lg font-bold"
+                  onClick={handleBackClick}
+                >
+                  <img
+                    src={BackArrowIcon}
+                    alt="Back Arrow"
+                    className="w-8 h-8 mr-6"
+                  />
+                  <span>Go to Admin Panel</span>
+                </button>
+             </div>
                   <h2 className="text-2xl text-gray-500 font-semibold font-bold font-sf-pro">Subscribe to {type}</h2>
 
                   <div className="flex justify-between items-center mt-3">
@@ -316,8 +358,13 @@ const SubscriptionCard: React.FC<SubscriptionCardProps> = ({type, handleSubscrib
               <div className="text-center text-black text-2xl font-bold">{type}</div>
             </div>
             <div className="w-1/2 flex justify-center items-center">
-                <button className="bg-black text-2xl text-white hover:bg-gray-600 rounded-full m-2 p-2 pl-4 pr-4 font-sf-pro"
-                onClick={() => handleSubscribe('name', 29, monthly)}>Subscribe for $ {monthly.toString()}/m</button>
+            <button 
+              className="bg-black text-2xl text-white hover:bg-gray-600 rounded-full m-2 p-2 pl-4 pr-4 font-sf-pro"
+              onClick={() => handleSubscribe('Mixiflow', monthly, monthly)}
+            >
+              Subscribe for $ {monthly.toString()}/m
+            </button>
+
             </div>
           </div>
           </>

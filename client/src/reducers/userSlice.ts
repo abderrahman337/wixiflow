@@ -11,25 +11,34 @@ interface UserDetails {
     remain?: number;
     plan?: number;
   };
-  // Add other user-specific fields here as needed
-  // e.g. name: string;
+  
 }
 
-interface UserState {
+export interface CurrentPlan {
+  workspacesUsed: number;
+  maxWorkspaces: number;
+  appsPerWorkspace: number;
+  tasksPerApp: number;
+  status: string;
+}
+
+export interface UserState {
   isAuthenticated: boolean; // Boolean flag for authentication status
   token: {
     accessToken: string;
     refreshToken: string;
   } | null; // Token to authenticate API requests
   userDetails: UserDetails | null; // Object to hold various user details
-  users: UserDetails[]; // Array to hold multiple user details
+  users: UserDetails[];
+  currentPlan: CurrentPlan | null; // Define the type for currentPlan
 }
 
 // Define the initial state
 const initialState: UserState = {
   isAuthenticated: false, // Boolean flag for authentication status
   token: null, // Token to authenticate API requests
-  userDetails: null, // Object to hold various user details
+  userDetails: null,
+  currentPlan: null, // Object to hold various user details
   users: [], // Array to hold multiple user details
 };
 
@@ -57,9 +66,14 @@ const userSlice = createSlice({
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("userId");
       state.userDetails = null; // Reset user details
+      state.currentPlan = null; // Reset current plan
     },
     // Reducer to set user details
-
+    setUserDetails: (state, action) => {
+      localStorage.setItem("userId", action.payload._id);
+      state.userDetails = action.payload; // Set user details with payload data
+      state.isAuthenticated = true;
+    },
     setUsers: (state, action: PayloadAction<UserDetails[]>) => {
       state.users = action.payload;
     },
@@ -70,17 +84,16 @@ const userSlice = createSlice({
           : user
       );
     },
-    setUserDetails: (state, action) => {
-      localStorage.setItem("userId", action.payload._id);
-      state.userDetails = action.payload; // Set user details with payload data
-      state.isAuthenticated = true;
-    },
     undoDeleteUser: (state, action: PayloadAction<UserDetails>) => {
       state.users = state.users.map((user) =>
         user._id === action.payload._id
           ? { ...user, deleted: action.payload.deleted }
           : user
       );
+    },
+    // Reducer to set the current plan
+    setCurrentPlan: (state, action: PayloadAction<CurrentPlan>) => {
+      state.currentPlan = action.payload;
     },
   },
 });
@@ -93,7 +106,7 @@ export const {
   deleteUser,
   undoDeleteUser,
   setUserDetails,
+  setCurrentPlan, 
 } = userSlice.actions;
 
-// Export the reducer to be included when creating the Redux store
 export default userSlice.reducer;

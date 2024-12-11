@@ -212,6 +212,42 @@ export const signUp =
     }
   };
 
+  // Microsoft Sign-In
+export const microsoftSignin =
+(accessToken: string, navigate: (path: string) => void) =>
+async (dispatch: AppDispatch): Promise<void> => {
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_AUTHORITY}/oauth2/v2.0/token`,
+      new URLSearchParams({
+        client_id: import.meta.env.VITE_CLIENT_ID,
+        client_secret: import.meta.env.VITE_CLIENT_SECRET,
+        redirect_uri: import.meta.env.VITE_REDIRECT_URI,
+        grant_type: "authorization_code",
+        scope: "user.read ",
+        code: accessToken, 
+      }),
+      {
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      }
+    );
+
+    if (response.status === 200) {
+      dispatch(login(response.data)); 
+      navigate("/dashboard");
+      toast.success("Login successful!", { position: "top-right", className: "text-sm sm:text-lg" });
+    } else {
+      throw new Error(response.statusText || "Microsoft sign-in failed.");
+    }
+  } catch (error) {
+    console.error("Microsoft Sign-In Error:", error);
+    toast.error("Error during Microsoft sign-in. Please try again.", { position: "top-right", className: "text-sm sm:text-lg" });
+  }
+};
+
+
 export const changeROSI =
   (user_id: string, repeatTimes: number, period: number) =>
   async (dispatch: AppDispatch): Promise<void> => {
